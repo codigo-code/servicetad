@@ -86,8 +86,33 @@ public class App {
 					conn.getResponseMessage();
 					System.out.println(2);
 				} else if (conn.getResponseCode() == 405) {
-					conn.getResponseMessage();
-					System.out.println(1);
+					conn = (HttpURLConnection) url.openConnection();
+					conn.setRequestMethod("POST"); // chequeo que sea de tipo post
+					if (conn.getResponseCode() == 200) {
+						conn.getResponseMessage();
+						System.out.println(0);
+					} else if (conn.getResponseCode() == 500) { // si devuelve 500 se debe a que los parametros no son
+						conn.getResponseMessage();								// correctos un error interno del servidor
+						System.out.println(1);
+
+					} else {
+						conn.getResponseMessage();
+						System.out.println(3); // cualquier otro problema lo tomamos como no valido
+					}
+				} else if (conn.getResponseCode() == 400) {
+					conn = (HttpURLConnection) url.openConnection();
+					conn.setRequestMethod("POST"); // chequeo que sea de tipo post
+					if (conn.getResponseCode() == 200) {
+						conn.getResponseMessage();
+						System.out.println(0);
+					} else if (conn.getResponseCode() == 500) { // si devuelve 500 se debe a que los parametros no son
+						conn.getResponseMessage();									// correctos un error interno del servidor
+						System.out.println(0);
+
+					} else {
+						conn.getResponseMessage();
+						System.out.println(1); // cualquier otro problema lo tomamos como no valido
+					}
 				} else {
 					conn.getResponseMessage();
 					System.out.println(3);
